@@ -36,13 +36,12 @@ const generateAndSendEmailOtp = ({ email }) => {
 };
 
 const verifyEmailOtp = (verifiedUser, activeUser) => {
-  console.log(verifiedUser.otp);
-  
+  console.log("OTP : ", verifiedUser.otp);
   try {
-    if(!activeUser.otp){
+    if (!activeUser.otp) {
       console.error("OTP is not provided");
       throw new CustomError("OTP is required.", 400);
-    }    
+    }
     if (verifiedUser.otp !== activeUser.otp) {
       throw new CustomError("Invalid OTP", 400);
     }
