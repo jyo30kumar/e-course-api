@@ -48,7 +48,6 @@ const verifyEmailOtp = (verifiedUser, activeUser) => {
     return;
   } catch (error) {
     console.error(error);
-
     throw error;
   }
 };

@@ -3,7 +3,7 @@ const errorHandler = (error, req, res, next) => {
   if (statusCode == 500) {
     error.message = "Internal Server Error";
   }
-  res.status(statusCode).json(error.message);
+  res.status(statusCode).json({success:false, message:error.message});
 };
 
 export { errorHandler };
