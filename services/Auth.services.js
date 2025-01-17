@@ -15,12 +15,12 @@ const generateAndSendEmailOtp = ({ email }) => {
     if (!validateEmail(email)) {
       throw new CustomError("Invalid Email Format.", 400);
     }
-
     //check duplicate email entry
-
 
     // generate otp
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  console.log("OTP : ", otp);
+
     // send otp to email
     otpService.sendOtpEmail(email, otp);
 
@@ -37,13 +37,15 @@ const generateAndSendEmailOtp = ({ email }) => {
 };
 
 const verifyEmailOtp = (verifiedUser, activeUser) => {
-  console.log("OTP : ", verifiedUser.otp);
+  console.log("OTP from token:", verifiedUser.otp);
+  console.log("OTP By User:", activeUser.otp);
+
   try {
     if (!activeUser.otp) {
       console.error("OTP is not provided");
       throw new CustomError("OTP is required.", 400);
     }
-    if (verifiedUser.otp !== activeUser.otp) {
+    if (verifiedUser.otp != activeUser.otp) {
       throw new CustomError("Invalid OTP", 400);
     }
     return;
