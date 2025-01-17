@@ -4,8 +4,4 @@ const validateEmail = (email) =>{
     return emailRegExp.test(email);
 }
 
-const validator = {
-    validateEmail
-}
-
-export {validator} 
+export {validateEmail} 

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { CustomError } from "../utils/customError.js";
 import { hashString } from "../utils/hashString.js";
 import { otpService } from "../utils/otpService.js";
-import { validator } from "../utils/validator.js";
+import { validateEmail } from "../utils/validator.js";
 import "dotenv/config";
 
 const generateAndSendEmailOtp = ({ email }) => {
@@ -12,11 +12,12 @@ const generateAndSendEmailOtp = ({ email }) => {
       throw new CustomError("Email is required.", 400);
     }
     // validating email
-    if (!validator.validateEmail(email)) {
+    if (!validateEmail(email)) {
       throw new CustomError("Invalid Email Format.", 400);
     }
 
     //check duplicate email entry
+
 
     // generate otp
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
