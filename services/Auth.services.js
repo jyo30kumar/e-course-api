@@ -4,6 +4,7 @@ import { hashString } from "../utils/hashString.js";
 import { otpService } from "../utils/otpService.js";
 import { validateEmail } from "../utils/validator.js";
 import "dotenv/config";
+import { User } from "../database/models/User.model.js";
 
 const generateAndSendEmailOtp = ({ email }) => {
   try {
@@ -19,38 +20,47 @@ const generateAndSendEmailOtp = ({ email }) => {
 
     // generate otp
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  console.log("OTP : ", otp);
+    console.log("OTP : ", otp);
 
     // send otp to email
     otpService.sendOtpEmail(email, otp);
 
     //generate token
     const token = jwt.sign({ email, otp }, process.env.SECRETKEY, {
-      expiresIn: "5m",
+      expiresIn: "25m",
     });
 
     return token;
   } catch (error) {
-    console.error(error.stack);
     throw error;
   }
 };
 
-const verifyEmailOtp = (verifiedUser, activeUser) => {
-  console.log("OTP from token:", verifiedUser.otp);
-  console.log("OTP By User:", activeUser.otp);
+const verifyEmailOtp = (tokenOtp, clientOtp) => {
+  console.log("OTP from token:", tokenOtp);
 
   try {
-    if (!activeUser.otp) {
-      console.error("OTP is not provided");
+    if (!clientOtp) {
       throw new CustomError("OTP is required.", 400);
     }
-    if (verifiedUser.otp != activeUser.otp) {
+    if (tokenOtp != clientOtp) {
       throw new CustomError("Invalid OTP", 400);
     }
-    return;
+    return true;
   } catch (error) {
-    console.error(error);
+    throw error;
+  }
+};
+
+const registerUserEmail = async (email) => {
+  const newUser = new User({
+    userEmail: email,
+    isVerify:1,
+  });
+  try {
+    const data = await newUser.save({ validateBeforeSave: false });
+    return { success: true, id: data._id };
+  } catch (error) {
     throw error;
   }
 };
@@ -61,7 +71,6 @@ const registerUser = async ({ firstName, lastName, email, password }) => {
     const hashedPassword = await hashString(password);
     return hashedPassword;
   } catch (error) {
-    console.error(error.stack);
     throw error;
   }
 };
@@ -69,6 +78,7 @@ const registerUser = async ({ firstName, lastName, email, password }) => {
 const authServices = {
   generateAndSendEmailOtp,
   verifyEmailOtp,
+  registerUserEmail,
   registerUser,
 };
 

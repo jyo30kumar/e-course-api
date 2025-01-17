@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   firstName: {
     type: String,
-    required: true,
   },
   lastName: {
     type: String,
@@ -18,7 +17,6 @@ const userSchema = new Schema({
     required: true,
   },
   phoneNumber: Number,
-  
   isVerify: {
     type: Number,
     default: 0,
