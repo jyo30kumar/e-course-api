@@ -67,6 +67,9 @@ const registerUserEmail = async (email) => {
 
 const registerUserProfile = async ({ firstName, lastName, phoneNumber, password, id }) => {
   try {
+    if(!password){
+      throw new CustomError("Password is required", 400);
+    }
     //hashing password
     const hashedPassword = await hashString(password);
     // register user profile 
@@ -77,9 +80,12 @@ const registerUserProfile = async ({ firstName, lastName, phoneNumber, password,
       password:hashedPassword,
       isVerify:2,
     });
+    if(userProfile.matchedCount == 0){
+      throw new CustomError("User not found or User not verified.", 404);
+    }
     //generate token
-    const token = jwt.sign({}, process.env.SECRETKEY,{expiresIn:"30d"});
-    return {userProfile, token};
+    const token = jwt.sign({id}, process.env.SECRETKEY,{expiresIn:"30d"});
+    return {id, token};
   } catch (error) {
     throw error;
   }
