@@ -27,7 +27,7 @@ const generateAndSendEmailOtp = ({ email }) => {
 
     //generate token
     const token = jwt.sign({ email, otp }, process.env.SECRETKEY, {
-      expiresIn: "25m",
+      expiresIn: "5m",
     });
 
     return token;
@@ -65,11 +65,21 @@ const registerUserEmail = async (email) => {
   }
 };
 
-const registerUser = async ({ firstName, lastName, email, password }) => {
+const registerUserProfile = async ({ firstName, lastName, phoneNumber, password, id }) => {
   try {
     //hashing password
     const hashedPassword = await hashString(password);
-    return hashedPassword;
+    // register user profile 
+    const userProfile = await User.updateOne({_id:id, isVerify:1}, {
+      firstName:firstName,
+      lastName:lastName,
+      phoneNumber:phoneNumber,
+      password:hashedPassword,
+      isVerify:2,
+    });
+    //generate token
+    const token = jwt.sign({}, process.env.SECRETKEY,{expiresIn:"30d"});
+    return {userProfile, token};
   } catch (error) {
     throw error;
   }
@@ -79,7 +89,7 @@ const authServices = {
   generateAndSendEmailOtp,
   verifyEmailOtp,
   registerUserEmail,
-  registerUser,
+  registerUserProfile,
 };
 
 export { authServices };
