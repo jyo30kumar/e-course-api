@@ -14,12 +14,12 @@ const sendEmailOtp = async (req, res, next) => {
 const verifyEmailOtp = async (req, res, next) => {
   try {
     const result = services.verifyEmailOtp(
-      req.otpTokenData["otp"],
+      req.data["otp"],
       req.body["otp"]
     );
     if (result) {
       const result = await services.registerUserEmail(
-        req.otpTokenData["email"]
+        req.data["email"]
       );
       if (result.success) {
         res.status(200).json({ success: true, id: result["id"] });
@@ -32,11 +32,11 @@ const verifyEmailOtp = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   try {
-    const response = await services.registerUser(req.body);
+    const response = await services.registerUserProfile(req.body);
     res.status(201).json({
       success: true,
       message: "User Registered Successfully",
-      hashedPassword: response,
+      query: response,
     });
   } catch (error) {
     next(error);

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authController as controller } from "../controllers/Auth.controller.js";
-import { verifyJwtTokenForEmailOtp as authMiddleware } from "../middlewares/authMiddleware.js";
+import {authMiddleware } from "../middlewares/authMiddleware.js";
 
 const authRouter = Router();
 
