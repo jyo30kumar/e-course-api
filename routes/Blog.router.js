@@ -21,6 +21,11 @@ const validateBlogInput = (req, res, next) => {
     next();
 }
 
-blogRouter.post("/upload",parsedData, validateBlogInput, uploadImageHandler, controller.uploadBlog);
+blogRouter.post("/upload",
+    parsedData, // parse data from multipart/fomr-data
+    validateBlogInput, // validate input before uploading image to cloudinary
+    uploadImageHandler, // upload image to the cloudinary after validation
+    controller.uploadBlog // controller
+);
 
 export {blogRouter};
