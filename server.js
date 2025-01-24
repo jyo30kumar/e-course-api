@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import { authRouter } from './routes/Auth.router.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { CustomError } from './utils/customError.js';
+import { blogRouter } from './routes/Blog.router.js';
 
 // variables declaration 
 const app = express();
@@ -25,14 +26,17 @@ db().then(()=>{
 
 //api endpoints
 app.use("/api/auth", authRouter)
+app.use("/api/blog", blogRouter);
+
 
 // error handling for all undefined routes
 app.use("*", (req, res, next) =>{
     throw new CustomError(`Not Found - ${req.originalUrl}`, 404)
 })
 
-//error handler middleware
+//global error handler middleware
 app.use(errorHandler);
+
 
 // server running
 app.listen(PORT, ()=>{
