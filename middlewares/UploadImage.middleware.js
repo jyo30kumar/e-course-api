@@ -1,9 +1,8 @@
 import multer from "multer";
-// import { blogStorage } from "../config/Cloudinary.config.js";
 import { CustomError } from "../utils/customError.js";
-import { upload } from "../utils/cloudinaryStorage.js";
+import { uploadFile } from "../utils/uploadFileCloudinary.js"; //validation logic is in this file
 
-const uploadImage = upload.single("blogImage");
+const  uploadImage = uploadFile.single("blogImage");
 
 const uploadImageHandler = async (req, res, next) => {
   try {

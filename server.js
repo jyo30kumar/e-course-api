@@ -4,7 +4,7 @@ import "dotenv/config";
 import { db } from './database/db.js';
 import bodyParser from 'body-parser';
 import { authRouter } from './routes/Auth.router.js';
-import { errorHandler } from './middlewares/errorHandler.js';
+import { errorHandler } from './middlewares/ErrorHandler.middleware.js';
 import { CustomError } from './utils/customError.js';
 import { blogRouter } from './routes/Blog.router.js';
 

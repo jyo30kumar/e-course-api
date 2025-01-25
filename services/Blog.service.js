@@ -13,7 +13,8 @@ const addBlog = async ({title, content, createdDate, updatedDate, readingTime}, 
         })
 
         const result = await blogData.save();
-        console.log("table returned data", result);
+        // console.log("table returned data", result);
+        return result;
         
     } catch (error) {
         throw(error);
