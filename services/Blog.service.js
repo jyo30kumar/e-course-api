@@ -1,5 +1,4 @@
 import { Blog } from "../database/models/Blog.model.js";
-import { CustomError } from "../utils/customError.js";
 
 const addBlog = async ({title, content, createdDate, updatedDate, readingTime}, file) =>{
     try {
