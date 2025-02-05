@@ -4,4 +4,9 @@ const validateEmail = (email) =>{
     return emailRegExp.test(email);
 }
 
-export {validateEmail} 
+const validateMobileNumber = (number) =>{
+    const mobileRegExp = /^\d{10}$/;
+    return mobileRegExp.test(number);
+}
+
+export {validateEmail, validateMobileNumber} 
