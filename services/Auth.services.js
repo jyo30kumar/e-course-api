@@ -7,7 +7,7 @@ import { otpService } from "../utils/otpService.js";
 import { validateEmail, validateMobileNumber } from "../utils/validator.js";
 import { User } from "../database/models/User.model.js";
 
-const generateAndSendEmailOtp = async(email) => {
+const generateAndSendEmailOtp = async (email) => {
   try {
     // input validation
     if (!email) {
@@ -18,9 +18,9 @@ const generateAndSendEmailOtp = async(email) => {
       throw new CustomError("Invalid Email Format.", 400);
     }
     //check duplicate email entry
-    const fetchUser = await User.findOne({userEmail:email});
-    if(fetchUser){
-      throw new CustomError("User already exist", 409)
+    const fetchUser = await User.findOne({ userEmail: email });
+    if (fetchUser) {
+      throw new CustomError("User already exist", 409);
     }
 
     // generate otp
@@ -83,7 +83,10 @@ const registerUserProfile = async ({
     }
     //number validating
     if (!validateMobileNumber(phoneNumber)) {
-      throw new CustomError("Invalid Mobile Number Format. (Only 10 digits number allowed.)", 400);
+      throw new CustomError(
+        "Invalid Mobile Number Format. (Only 10 digits number allowed.)",
+        400
+      );
     }
     //hashing password
     const hashedPassword = await hashString(password);
