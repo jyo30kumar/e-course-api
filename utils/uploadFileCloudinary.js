@@ -3,11 +3,15 @@ import { CustomError } from "./customError.js";
 import {blogStorage} from "../config/Cloudinary.config.js"
 
 // File filter to restrict file types and validating inputs before uploading to cloudinary
-const fileFilter = (req, file, cb) => {
-  const { title, category } = req.body;
-  if (!title || !category) {
-    cb(new CustomError("Title or category is required", 400), false);
+const fileFilter = (req, file, cb) => {  
+  const { title, categoryId } = req.body;
+  
+  if (!title) {
+    cb(new CustomError("Title required", 400), false);
+  }else if(!categoryId){
+    cb(new CustomError("Category Id is required.", 400), false);
   }
+
   if (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpeg" ||

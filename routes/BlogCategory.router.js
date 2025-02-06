@@ -3,8 +3,8 @@ import { blogCategoryController as controller} from "../controllers/BlogCategory
 
 const blogCategoryRouter = Router();
 
-blogCategoryRouter.get("/", controller.getAllBlogCategory);
-blogCategoryRouter.post("/", controller.addBlogCategory);
-blogCategoryRouter.put("/:id", controller.updateBlogCategory);
+blogCategoryRouter.get("/all", controller.getAllBlogCategory);
+blogCategoryRouter.post("/add", controller.addBlogCategory);
+blogCategoryRouter.put("/update/:id", controller.updateBlogCategory);
 
 export {blogCategoryRouter}

@@ -13,29 +13,32 @@ const newBlogCategory = async (category) => {
   }
 };
 
-const fetchAllBlogCategories = async() => {
-    try {
-        const result = await BlogCategory.find({}, "category");
-        return result;
-    } catch (error) {
-        throw error;
-    }
-}
+const fetchAllBlogCategories = async () => {
+  try {
+    const result = await BlogCategory.find({}, "category");
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 
-const editBlogCategory = async(id, category) =>{
-    try {
-        if(!category){
-            throw new CustomError("Category is undefined.", 400);
-        }
-        const result = await BlogCategory.updateOne({_id:id},{category});
-        if(result.modifiedCount == 0){
-            throw new CustomError("No match found.", 400)
-        }
-        return;
-    } catch (error) {
-        throw error;
+const editBlogCategory = async (id, category) => {
+  try {
+    if (!id || id == ":id") {
+      throw new CustomError("Category id is not defined.", 400);
     }
-}
+    if (!category) {
+      throw new CustomError("Category is undefined.", 400);
+    }
+    const result = await BlogCategory.find({ _id: id }, { category });
+    if (result.modifiedCount == 0) {
+      throw new CustomError("No match found.", 400);
+    }
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const blogCategoryServices = {
   newBlogCategory,

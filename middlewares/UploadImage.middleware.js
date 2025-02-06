@@ -13,7 +13,7 @@ const uploadImageHandler = async (req, res, next) => {
       })
     );
     if (!req.file) {
-      throw new CustomError("File is not provided", 400);
+      throw new CustomError("Image file is not provided", 400);
     }
     next();
   } catch (error) {
