@@ -4,9 +4,9 @@ import {blogStorage} from "../config/Cloudinary.config.js"
 
 // File filter to restrict file types and validating inputs before uploading to cloudinary
 const fileFilter = (req, file, cb) => {
-  const { title } = req.body;
-  if (!title) {
-    cb(new CustomError("Title is required", 400), false);
+  const { title, category } = req.body;
+  if (!title || !category) {
+    cb(new CustomError("Title or category is required", 400), false);
   }
   if (
     file.mimetype === "image/png" ||
