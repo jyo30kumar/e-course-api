@@ -7,6 +7,7 @@ import { authRouter } from './routes/Auth.router.js';
 import { errorHandler } from './middlewares/ErrorHandler.middleware.js';
 import { CustomError } from './utils/customError.js';
 import { blogRouter } from './routes/Blog.router.js';
+import { blogCategoryRouter } from './routes/BlogCategory.router.js';
 
 // variables declaration 
 const app = express();
@@ -27,6 +28,7 @@ db().then(()=>{
 //api endpoints
 app.use("/api/auth", authRouter)
 app.use("/api/blog", blogRouter);
+app.use("/blogCategory", blogCategoryRouter);
 
 
 // error handling for all undefined routes
