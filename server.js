@@ -28,7 +28,7 @@ db().then(()=>{
 //api endpoints
 app.use("/api/auth", authRouter)
 app.use("/api/blog", blogRouter);
-app.use("/blogCategory", blogCategoryRouter);
+app.use("/api/blogCategory", blogCategoryRouter);
 
 
 // error handling for all undefined routes

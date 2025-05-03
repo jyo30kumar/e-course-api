@@ -7,7 +7,7 @@ cloudinary.config({
   cloud_name: "dr0tjs58l",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure:true
+  secure: true,
 });
 
 // creating a storage for file in cloudinary
