@@ -38,8 +38,8 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     const result = await services.loginUser(email, password);
     if (result) {
       res.status(200).json({ success: true, token: result });
@@ -49,11 +49,29 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) =>{
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true, // set to true if using https
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully.",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 const authController = {
   sendEmailOtp,
   verifyEmailOtp,
   register,
   login,
+  logout,
 };
 
 export { authController };
