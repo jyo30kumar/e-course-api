@@ -2,10 +2,10 @@ import { authServices as services } from "../services/Auth.services.js";
 
 const sendEmailOtp = async (req, res, next) => {
   try {
-    const token = await services.generateAndSendEmailOtp(req.body["email"]);
+    const data = await services.generateAndSendEmailOtp(req.body["email"]);
     res
       .status(200)
-      .json({ token, success: true, message: "OTP sent successfully." });
+      .json({ data, success: true, message: "OTP sent successfully." });
   } catch (error) {
     next(error);
   }

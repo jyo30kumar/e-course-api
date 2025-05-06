@@ -34,8 +34,8 @@ const generateAndSendEmailOtp = async (email) => {
     const token = jwt.sign({ email, otp }, process.env.SECRETKEY, {
       expiresIn: "5m",
     });
-
-    return token;
+    const data = {token, otp};
+    return data;
   } catch (error) {
     throw error;
   }
